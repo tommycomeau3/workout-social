@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import './db';
+import authRoutes from './routes/auth';
 
 dotenv.config();
 
@@ -17,10 +18,13 @@ app.get('/', (req, res) => {
   res.json({ message: 'Workout Social API is running!' });
 });
 
-// Routes will go here
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date() });
 });
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
