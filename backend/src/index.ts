@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import './db';
 import authRoutes from './routes/auth';
 import exerciseRoutes from './routes/exercises';
+import workoutRoutes from './routes/workouts';
+import socialRoutes from './routes/social';
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/exercises', exerciseRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/social', socialRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
