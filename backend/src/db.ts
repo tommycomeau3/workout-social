@@ -5,7 +5,7 @@ const pool = new Pool({
 });
 
 // Test the connection
-pool.query('SELECT NOW()', (err, res) => {
+pool.query('SELECT NOW()', (err: any, res: any) => {
   if (err) {
     console.error('❌ Database connection failed:', err);
   } else {

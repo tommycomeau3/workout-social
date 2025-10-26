@@ -1,9 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function ProfileScreen() {
-  const navigation = useNavigation();
+  const { user, logout, isLoading } = useAuth();
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Logout', 
+          style: 'destructive',
+          onPress: logout
+        }
+      ]
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -14,13 +29,18 @@ export default function ProfileScreen() {
       
       <View style={styles.content}>
         <View style={styles.profileCard}>
-          <Text style={styles.username}>Demo User</Text>
-          <Text style={styles.bio}>Fitness enthusiast</Text>
+          <Text style={styles.username}>{user?.username || 'Loading...'}</Text>
+          <Text style={styles.email}>{user?.email || ''}</Text>
+          <Text style={styles.bio}>{user?.bio || 'No bio yet'}</Text>
+          <Text style={styles.memberSince}>
+            Member since {user?.created_at ? new Date(user.created_at).toLocaleDateString() : ''}
+          </Text>
         </View>
         
         <TouchableOpacity 
-          style={styles.button}
-          onPress={() => navigation.navigate('Login' as never)}
+          style={[styles.button, isLoading && styles.buttonDisabled]}
+          onPress={handleLogout}
+          disabled={isLoading}
         >
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
@@ -66,9 +86,22 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 5,
   },
+  email: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 10,
+  },
   bio: {
     fontSize: 16,
     color: '#666',
+    textAlign: 'center',
+    marginBottom: 10,
+    fontStyle: 'italic',
+  },
+  memberSince: {
+    fontSize: 14,
+    color: '#999',
+    fontStyle: 'italic',
   },
   button: {
     backgroundColor: '#FF3B30',
@@ -76,6 +109,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 25,
     alignItems: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
   },
   buttonText: {
     color: 'white',
