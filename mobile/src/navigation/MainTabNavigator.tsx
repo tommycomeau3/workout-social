@@ -18,6 +18,11 @@ export default function MainTabNavigator() {
           height: 60,
           paddingBottom: 8,
           paddingTop: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.08,
+          shadowRadius: 6,
+          elevation: 8,
         },
       }}
     >
@@ -45,9 +50,9 @@ export default function MainTabNavigator() {
         name="Record" 
         component={CreateWorkoutScreen}
         options={{
-          tabBarLabel: 'Record',
-          tabBarIcon: ({ color, size }) => (
-            <View style={[styles.recordButton, { backgroundColor: color }]}>
+          tabBarLabel: '',
+          tabBarIcon: () => (
+            <View style={styles.recordFab} accessibilityLabel="Create workout">
               <Text style={styles.recordIcon}>●</Text>
             </View>
           ),
@@ -78,13 +83,19 @@ export default function MainTabNavigator() {
 }
 
 const styles = StyleSheet.create({
-  recordButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  recordFab: {
+    width: 62,
+    height: 62,
+    borderRadius: 31,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 18,
+    backgroundColor: '#FF6B35',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    elevation: 6,
   },
   recordIcon: {
     color: 'white',
