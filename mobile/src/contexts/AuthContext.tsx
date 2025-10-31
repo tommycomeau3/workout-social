@@ -82,6 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async () => {
     try {
       setIsLoading(true);
+      setError(null);
       await apiService.logout();
       setUser(null);
     } catch (error) {
